@@ -98,7 +98,7 @@ export class PuzzleContainerComponent {
     const memes = [
       'assets/memes/exo-happy.gif',
       'assets/memes/exo-chanyeol-laugh.gif',
-      'assets/memes/exo-suho-clap.gif',
+      'assets/memes/exo-clap.gif',
     ];
 
     this.randomMeme = memes[Math.floor(Math.random() * memes.length)];

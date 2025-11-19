@@ -60,12 +60,17 @@ export class IntroducingComponent {
     }
 
     if (!refData?.used) {
+      
+      this.shared.setNama(name);
+
       await this.referralService.markUsed(refData.id);
 
       localStorage.setItem(
         'userReferralAccess',
         JSON.stringify({
           name: name,
+          rewardLinkFront: refData?.rewardLinkFront,
+          rewardLinkBack: refData?.rewardLinkBack,
           referralCode: kode,
           timestamp: new Date().toISOString(),
         })
@@ -77,17 +82,20 @@ export class IntroducingComponent {
         text: 'Kode referral valid. Yuk lanjut!',
       });
 
-      this.shared.setNama(name);
       this.showLoading = false;
       this.router.navigate(['starting-journey']);
       return;
     }
 
     if (refData.used && refData.username === username) {
+      this.shared.setNama(name);
+
       localStorage.setItem(
         'userReferralAccess',
         JSON.stringify({
           name: name,
+          rewardLinkFront: refData?.rewardLinkFront,
+          rewardLinkBack: refData?.rewardLinkBack,
           referralCode: kode,
           timestamp: new Date().toISOString(),
         })
@@ -98,7 +106,6 @@ export class IntroducingComponent {
         title: 'Berhasil!',
         text: 'Kode referral valid. Yuk lanjut!',
       });
-      this.shared.setNama(name);
       this.showLoading = false;
       this.router.navigate(['starting-journey']);
       return;

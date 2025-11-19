@@ -18,10 +18,18 @@ export class RewardComponent implements AfterViewInit {
 
   showThankYouPopup = true;
 
+  rewardLinkFront = "";
+  rewardLinkBack = "";
+
   constructor(private router: Router) {}
 
   ngOnInit() {
-    const userAccess = localStorage.getItem('userReferralAccess');
+    let userAccess : any;
+    userAccess = localStorage.getItem('userReferralAccess');
+    userAccess = JSON.parse(userAccess);
+    this.rewardLinkFront = userAccess?.rewardLinkFront;
+    this.rewardLinkBack = userAccess?.rewardLinkBack;
+
     if (!userAccess) {
       this.router.navigate(['/introducing']);
       return;

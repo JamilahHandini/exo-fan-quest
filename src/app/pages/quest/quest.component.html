@@ -1,0 +1,68 @@
+
+<div class="card-wrapper">
+  <h1 class="main-title">Question</h1>
+  <div class="card-container">
+    <div class="circle-timer" [style]="{'--progress': progress}">
+      <div class="time-text">{{ timeLeft }}s</div>
+    </div>
+    <h2>{{ question }}</h2>
+    
+    <div class="options-grid">
+      <div
+        *ngFor="let opt of options"
+        class="option-card"
+        [class.selected]="opt === selectedOption"
+        (click)="selectOption(opt)"
+      >
+        <div class="option">
+          <img [src]="opt.img" alt="option" />
+        </div>
+        <span class="option-name">{{ opt.name }}</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Popup Konfirmasi / Hasil -->
+<div class="popup-backdrop" *ngIf="showPopup">
+  <div
+    class="popup-card"
+    [ngClass]="{
+      correct: isCorrect && !timeUp,
+      wrong: !isCorrect && selectedOption,
+      'time-up': timeUp
+    }"
+  >
+    <!-- Waktu habis -->
+    <ng-container *ngIf="!selectedOption && timeUp">
+      <img style="width: 50%; height: 50%;" src="assets/memes/timeup_kyungsoo.jpg" alt="Time Up Meme" class="popup-icon" />
+      <h3>⏰ Waktu habis!</h3>
+      <button class="btn btn-secondary yes" (click)="restartQuestion()">Coba Lagi</button>
+    </ng-container>
+
+    <!-- Jawaban salah -->
+    <ng-container *ngIf="selectedOption && !isCorrect && !timeUp && this.resultShown && confirmed">
+      <img style="width: 50%; height: 50%;" src="assets/memes/wrong_sehun.jpg" alt="Wrong Meme" class="popup-icon" />
+      <h3>😢 Salah, coba lagi!</h3>
+      <button class="btn btn-primary yes" (click)="restartQuestion()">Oke</button>
+    </ng-container>
+
+    <!-- Jawaban benar -->
+    <ng-container *ngIf="selectedOption && isCorrect && this.resultShown && confirmed">
+      <img style="width: 50%; height: 50%;" src="assets/memes/correct_chen.jpg" alt="Correct Meme" class="popup-icon" />
+      <h3>✨ Benar banget! ✨</h3>
+      <button class="btn btn-primary yes" (click)="nextQuestion()">Lanjut!</button>
+    </ng-container>
+
+    <!-- Popup konfirmasi sebelum jawab -->
+    <ng-container *ngIf="!isCorrect && !timeUp && !this.resultShown && selectedOption && !this.confirmed">
+      <h3>Sudah yakin sama pilihan kamu?</h3>
+      <div class="popup-actions">
+        <button class="no" (click)="cancelAnswer()">Batal</button>
+        <button class="yes" (click)="confirmAnswer()">Ya</button>
+      </div>
+    </ng-container>
+  </div>
+</div>
+

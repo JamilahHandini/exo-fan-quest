@@ -1,0 +1,61 @@
+<div class="suho-img">
+    <img src="/assets/images/suho-standing.png" alt="">
+</div>
+<div class="exodus-img">
+    <img class="spin" src="/assets/images/exodus.png" alt="">
+</div>
+<div class="exodus-2-img">
+    <img class="spin" src="/assets/images/exodus.png" alt="">
+</div>
+<div class="exodus-big-img">
+    <img src="/assets/images/exodus-big.png" alt="">
+</div>
+<div class="loading-screen" *ngIf="showLoading">
+  <div class="spinner"></div>
+  <p>Memuat pertanyaan...</p>
+</div>
+<div class="card-wrapper">
+    <h1 class="main-title">Welcome EXO-L</h1>
+    <div class="card-container">
+        <h2>Anyeong, Eriyaaa!</h2>
+        <p>Papi Suho ingin kenalan nih sama kamu. Yuk kasih tahu <strong>nama</strong> kamu! Dan jangan lupa masukin <strong>kode referral</strong> yang udah kamu dapet ya!</p>
+
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form-container">
+            <div class="form-group">
+            <label for="name">Nama</label>
+            <input
+                id="name"
+                type="text"
+                formControlName="name"
+                placeholder="Masukkan nama kamu"
+            />
+            </div>
+
+            <div class="form-group">
+            <label for="username">Username Shopee/Tiktok</label>
+            <input
+                id="username"
+                type="text"
+                formControlName="username"
+                placeholder="Masukkan Username kamu"
+            />
+            </div>
+
+            <div class="form-group">
+            <label for="kodeReferral">Kode Referral</label>
+            <input
+                id="kodeReferral"
+                type="text"
+                formControlName="kodeReferral"
+                placeholder="Masukkan kode referral kamu"
+            />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-glow" [disabled]="userForm.invalid" (click)="onSubmit()">
+                Submit
+            </button>
+        </form>
+    </div>
+</div>
+
+  

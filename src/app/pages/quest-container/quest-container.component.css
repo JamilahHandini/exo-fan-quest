@@ -1,0 +1,168 @@
+
+/* 🎬 Intro Popup */
+.intro-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.intro-card {
+  background: #fff;
+  border-radius: 25px;
+  padding: 30px;
+  width: 90%;
+  max-width: 500px;
+  margin: 10px;
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+}
+
+.intro-card h2 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  color: #111;
+}
+
+.intro-card p {
+  font-size: 1rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.intro-details {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+  color: #444;
+  text-align: left;
+}
+
+.start-btn {
+  background: linear-gradient(135deg, #995ec9, #0962df);
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: transform 0.2s;
+}
+
+.start-btn:hover {
+  transform: scale(1.05);
+}
+
+/* ⏳ Loading Screen */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: #111;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #555;
+  border-top: 6px solid #c080ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.end-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+
+  .popup-content {
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px 40px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    animation: popIn 0.6s ease;
+
+    /* 👇 ini penting biar elemen-elemen tersusun vertikal */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px; /* jarak antar elemen */
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    color: #6b46c1;
+  }
+
+  p {
+    margin: 0;
+    color: #555;
+  }
+
+  .exo-meme {
+    width: 250px;
+    height: auto;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+
+  .btn-finish {
+    background: linear-gradient(90deg, #6b46c1, #b794f4);
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.2s;
+
+    &:hover {
+      transform: scale(1.05);
+      background: linear-gradient(90deg, #553c9a, #9f7aea);
+    }
+  }
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

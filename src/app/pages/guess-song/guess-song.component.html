@@ -1,0 +1,64 @@
+<div class="card-wrapper">\
+  <h1 class="main-title">Tebak Lagu EXO!</h1>
+  <div class="card-container">
+    <h2>Lagu Apakah Ini?</h2>
+
+    <div class="audio-player">
+        <audio #audioPlayer [src]="audioSrc" preload="metadata"></audio>
+    </div>
+
+    <button
+      class="btn"
+      (click)="playRandomClip()"
+      [disabled]="playCount >= maxPlayCount || isPlaying">
+      ▶ Play Song [{{ maxPlayCount - playCount }}x sisa pemutaran]
+    </button>
+
+    <div class="options-grid">
+      <div
+        *ngFor="let opt of options"
+        class="option-card"
+        [class.selected]="opt === selectedOption"
+        (click)="selectOption(opt)"
+      >
+        <div class="option">
+          <img [src]="opt.img" alt="option" />
+        </div>
+        <span class="option-name">{{ opt.text }}</span>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+<!-- Popup -->
+<div class="popup-backdrop" *ngIf="showPopup">
+  <div class="popup-card" [ngClass]="{ correct: isCorrect, wrong: !isCorrect }">
+    <ng-container *ngIf="isCorrect">
+      <img src="assets/memes/correct_chen.jpg" alt="Correct Meme" class="popup-icon" />
+      <h3>✨ Benar banget! ✨</h3>
+      <button class="btn yes" (click)="nextQuestion()">Lanjut!</button>
+    </ng-container>
+
+    <ng-container *ngIf="!isCorrect">
+      <img src="assets/memes/wrong_sehun.jpg" alt="Wrong Meme" class="popup-icon" />
+      <h3>😢 Salah, coba lagi!</h3>
+      <button class="btn no" (click)="restartQuestion()">Oke</button>
+    </ng-container>
+  </div>
+</div>
+
+  <!-- 🧩 POPUP KONFIRMASI -->
+<div class="confirm-backdrop" *ngIf="showConfirmPopup">
+  <div class="confirm-card">
+    <h3>Yakin dengan jawabanmu? 🤔</h3>
+    <p>
+      Kamu memilih: <strong>{{ selectedOption.text }}</strong>
+    </p>
+    <div class="confirm-buttons">
+      <button class="btn cancel" (click)="cancelConfirm()">Batal</button>
+      <button class="btn yes" (click)="confirmAnswer()">Yakin!</button>
+    </div>
+  </div>
+</div>
+

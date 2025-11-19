@@ -1,0 +1,99 @@
+<div class="popup-backdrop" *ngIf="showThankYouPopup">
+  <div class="popup-card">
+    <p>Yuk mainkan musik nya, sesuaikan volume nya ya!</p>
+     <div class="spotify-player">
+      <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/10w5yROKTtdjmS00FmaGn4?utm_source=generator" width="100%" height="80%" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+    
+    <h3> Untuk EXO dan EXO-L, yang tak lelah menunggu...</h3>
+      <div class="popup-text">
+        <span>
+          Terimakasih.
+        </span>
+        <br>
+        <span>
+          Untuk setiap hari yang kita lewati dengan sabar,
+          sembari menatap langit dan bertanya,
+          "Kapankah mereka akan kembali (Comeback)?"
+          Menunggu..., bukan karena terpaksa,
+          namun karena cinta yang tak pernah padam.
+        </span>
+        <br>
+        <br>
+        <span>
+          Terimakasih, EXO-L..
+        </span>
+        <br>
+        <span>
+          Karena telah menjadi rumah yang hangat, meski jarak dan waktu sering memisahkan.
+          Kalian adalah bukti bahwa apapun keadaannya kita akan selalu disini bersama EXO.
+          Kadang cinta dan sayang kita tak harus selalu terlihat, tapi cukup dirasakan.
+          Lewat lagu, tawa, dan air mata yang sama-sama kita bagi.
+        </span>
+        <br>
+        <br>
+        <span>
+          Dan terimakasih tak terhingga untuk EXO yang kami cintai..
+        </span>
+        <br>
+        <span>
+          Terimakasih karena selalu berjuang untuk kami.
+          Karena tetap memilih untuk berdiri,
+          meski langkah kalian tak selalu mudah.
+          Terimakasih karena tidak menyerah,
+          karena kalian tahu, ada jutaan hati yang menunggu kalian di luar sana.
+          Dengan doa sederhana : "Semoga Kalian Tetap Bersama".
+        </span>
+        <br>
+        <br>
+        <span>
+          Kini meski panggung diisi entah berapa member,
+          tapi bagi kami EXO-L, rasa cinta itu tak akan berkurang.
+          Namun tetap saja, kami sedih mendengar kabar itu.
+          Karena sembilan berarti utuh.
+        </span>
+        <br>
+        <br>
+        <span>
+          Suatu hari nanti, ketika waktu akhirnya berpihak,
+          semoga kita bisa melihat sembilan bintang itu bersinar kembali di langit yang sama.
+          Lengkap, bernyanyi, tertawa, dan bergembira bersama.
+          Sampai hari itu tiba, kami akan tetap disini.
+          Menanti, mencintai, dan selalu percaya.
+        </span>        
+        <br>
+        <br>
+        <span>
+          Karena WE ARE ONE,
+          Selalu dan Untuk Selamanya!
+        </span>
+      </div>
+    <button class="btn btn-primary" (click)="closeThankYouPopup()">Claim Your Reward!</button>
+  </div>
+</div>
+
+<div class="card-wrapper">
+  <h1 class="main-title">Reward Time!</h1>
+  <div class="card-container reward-container" *ngIf="!showThankYouPopup">
+    <p>Karena kamu sudah melalui petualangan sederhana ini dengan baik, kamu bisa claim Photocard ini ya!
+    Jangan lupa bagikan keseruan ini ke EXO-L lainnya! Terimakasih ❤️ </p>
+
+    <div class="photocard-wrapper">
+      <div class="photocard">
+        <div class="photocard-face front">
+          <img src="assets/images/rewards/kyungsoo.png" alt="Photocard Front" />
+        </div>
+        <div class="photocard-face back">
+          <img src="assets/images/rewards/exo.png" alt="Photocard Back" />
+        </div>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button class="btn btn-primary" (click)="shareTwitter()">Share to X</button>
+      <button class="btn btn-primary" (click)="shareInstagram()">Share to Instagram</button>
+      <button class="btn btn-primary" (click)="claimReward()" [disabled]="!hasSharedInstagram && !hasSharedTwitter">Download</button>
+    </div>
+
+  </div>
+</div>

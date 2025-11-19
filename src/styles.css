@@ -1,1 +1,86 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    background-image: url('/assets/bg2.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* styles.css */
+.btn {
+  display: inline-block;
+  padding: 10px 22px;
+  border-radius: 12px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  height: 40px;
+}
+
+/* efek hover umum */
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 255, 255, 0.4);
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #f985d2, #3da4d8);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: linear-gradient(90deg, #8baecc, #384349);
+  color: #ffffff;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid #00d9ff;
+  color: #00d9ff;
+}
+
+.btn-outline:hover {
+  background: #00d9ff;
+  color: #fff;
+}
+
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.3), rgba(255,255,255,0));
+  transform: skewX(-20deg);
+}
+
+.btn-glow:hover::before {
+  animation: shine 1s forwards;
+}
+
+@keyframes shine {
+  0% { left: -75%; }
+  100% { left: 125%; }
+}
+
+.spin {
+  width: 200px;
+  height: 200px;
+  animation: spin 60s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

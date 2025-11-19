@@ -1,0 +1,49 @@
+.stars-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: transparent;
+  pointer-events: none;
+  z-index: 999;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  top: -10px;
+  background-color: white;
+  border-radius: 50%;
+  opacity: 0;
+  animation: fall 3s infinite;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) scale(0.5);
+    opacity: 0;
+  }
+}
+
+.star:nth-child(1) { animation-duration: 2.5s; left: 10%; animation-delay: 0s; }
+.star:nth-child(2) { animation-duration: 3.5s; left: 25%; animation-delay: 1s; }
+.star:nth-child(3) { animation-duration: 4.5s; left: 40%; animation-delay: 2s; }
+.star:nth-child(4) { animation-duration: 2s; left: 55%; animation-delay: 0.5s; }
+.star:nth-child(5) { animation-duration: 3s; left: 70%; animation-delay: 1.5s; }
+.star:nth-child(6) { animation-duration: 4s; left: 80%; animation-delay: 2.5s; }
+
+.star:nth-child(odd) {
+  width: 2px;
+  height: 2px;
+}
+
+.star:nth-child(even) {
+  width: 3px;
+  height: 3px;
+}

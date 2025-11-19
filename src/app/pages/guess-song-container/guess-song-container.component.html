@@ -1,0 +1,38 @@
+<!-- 🌟 INTRO POPUP -->
+<div class="popup-backdrop" *ngIf="showIntroPopup">
+  <div class="popup-card intro">
+    <h2>{{ chapterInfo.title }}</h2>
+    <p>{{ chapterInfo.description }}</p>
+    <p><strong>Total Lagu:</strong> {{ chapterInfo.totalSongs }}</p>
+    <button class="btn start" (click)="startGame()">Mulai Tebak Lagu 🎵</button>
+  </div>
+</div>
+
+<!-- ⏳ LOADING SCREEN -->
+<div class="loading-screen" *ngIf="showLoading">
+  <p>Menyiapkan lagu-lagu EXO...</p>
+  <div class="loader"></div>
+</div>
+
+<!-- 🎶 MAIN GAME -->
+<div class="game-container" *ngIf="gameStarted && songs.length > 0">
+  <app-guess-song
+    [audioSrc]="songs[currentSongIndex].audioSrc"
+    [options]="songs[currentSongIndex].options"
+    (nextSongEvent)="handleNextSong()"
+  ></app-guess-song>
+</div>
+
+<!-- 🎉 END POPUP -->
+<div class="popup-backdrop" *ngIf="showEndPopup">
+  <div class="popup-card end">
+    <h2>🎉 Kamu Hebat Banget! 🎉</h2>
+    <img [src]="randomMeme" alt="Meme EXO" class="end-meme" />
+    <p>Kamu berhasil menebak semua lagu EXO!</p>
+    <div class="button-group">
+      <button class="btn next" (click)="nextChapter('/puzzle')">
+        Claim Your Reward!
+      </button>
+    </div>
+  </div>
+</div>

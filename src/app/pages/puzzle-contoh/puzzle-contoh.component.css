@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.piece {
+  width: 60px;
+  height: 60px;
+  background: #80bfff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: grab;
+}
+
+.slot {
+  width: 60px;
+  height: 60px;
+  background: #eee;
+  border: 2px dashed #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}

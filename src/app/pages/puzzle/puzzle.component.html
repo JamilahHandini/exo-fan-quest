@@ -1,0 +1,79 @@
+<div class="card-wrapper">
+  <h1 class="main-title">{{ title }}</h1>
+
+  <div class="card-container" cdkDropListGroup>
+    <h2>{{ question }}</h2>
+    <p>{{ instruction }}</p>
+
+    <div class="puzzle-grid">
+      <div
+        *ngFor="let s of slots; let i = index"
+        class="slot"
+        cdkDropList
+        [cdkDropListData]="{ type: 'slot', index: i }"
+        (cdkDropListDropped)="onDropSlot($event)"
+      >
+        <span *ngIf="!s" class="slot-index">{{ i + 1 }}</span>
+        <div
+          *ngIf="s"
+          class="piece"
+          cdkDrag
+          [cdkDragData]="s"
+        >
+          <img *ngIf="s.img" [src]="s.img" alt="piece" class="piece-img" />
+          <span *ngIf="s.img" class="piece-text">{{ s.value }}</span>
+
+            <div class="drag-preview" *cdkDragPreview>
+              <img *ngIf="s.img" [src]="s.img" class="piece-img" />
+              <div class="preview-label">{{ s.value }}</div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="pieces-grid"
+      cdkDropList
+      [cdkDropListData]="{ type: 'pool' }"
+      (cdkDropListDropped)="onDropBackToPool($event)"
+    >
+      <div
+        *ngFor="let p of pieces"
+        class="piece"
+        cdkDrag
+        [cdkDragData]="p"
+      >
+        <img *ngIf="p.img" [src]="p.img" alt="piece" class="piece-img" />
+        <span *ngIf="!p.img" class="piece-text">{{ p.value }}</span>
+
+          <div class="drag-preview" *cdkDragPreview>
+            <img *ngIf="p.img" [src]="p.img" class="piece-img" />
+            <div class="preview-label">{{ p.value }}</div>
+          </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" (click)="checkAnswer()">Cek Jawaban</button>
+      <button class="btn btn-secondary" (click)="reset()">Reset</button>
+    </div>
+
+    <div class="popup-backdrop" *ngIf="showPopup">
+      <div class="popup-card" [class.correct]="isCorrect" [class.wrong]="!isCorrect">
+        <ng-container *ngIf="isCorrect">
+          <img src="assets/memes/correct_chen.jpg" alt="Correct Meme" class="popup-icon" />
+          <h3>{{ message }}</h3>
+          <button class="btn btn-primary" (click)="closePopup()">Lanjut!</button>
+        </ng-container>
+
+        <ng-container *ngIf="!isCorrect">
+          <img src="assets/memes/wrong_sehun.jpg" alt="Wrong Meme" class="popup-icon" />
+          <h3>{{ message }}</h3>
+          <button class="btn btn-secondary" (click)="closePopup()">Oke</button>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+

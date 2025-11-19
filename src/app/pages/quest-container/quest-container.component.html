@@ -1,0 +1,39 @@
+<div class="intro-backdrop" *ngIf="showIntroPopup">
+  <div class="intro-card">
+    <h2>{{ chapterInfo.title }}</h2>
+    <p>{{ chapterInfo.description }}</p>
+    <ul class="intro-details">
+      <li>📋 Jumlah pertanyaan: {{ chapterInfo.totalQuestions }}</li>
+      <li>⏱️ Waktu per pertanyaan: {{ chapterInfo.timePerQuestion }} detik</li>
+    </ul>
+    <button class="start-btn" (click)="startQuiz()">Oke, aku siap!</button>
+  </div>
+</div>
+
+<div class="loading-screen" *ngIf="showLoading">
+  <div class="spinner"></div>
+  <p>Memuat pertanyaan...</p>
+</div>
+
+<div class="end-popup" *ngIf="showEndPopup">
+  <div class="popup-content">
+    <h2>Wahhhh kamu berhasil jawab semua pertanyaan!</h2>
+    <h3>EXO-L sejati nih boss! 😎💖</h3>
+    <img
+      [src]="randomMeme"
+      alt="EXO Meme"
+      class="exo-meme"
+    />
+    <button class="btn-finish" (click)="nextChapter('/guess-song')">
+      Finish
+    </button>
+  </div>
+</div>
+
+<div *ngIf="quizStarted">
+  <app-quest
+    [question]="questions[currentQuestionIndex].question"
+    [options]="questions[currentQuestionIndex].options"
+    (nextQuestionEvent)="handleNextQuestion()"
+  ></app-quest>
+</div>

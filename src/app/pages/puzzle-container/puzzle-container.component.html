@@ -1,0 +1,38 @@
+<div class="intro-backdrop" *ngIf="showIntroPopup">
+  <div class="intro-card">
+    <h2>{{ chapterInfo.title }}</h2>
+    <p>{{ chapterInfo.description }}</p>
+    <ul class="intro-details">
+      <li>🧩 Jumlah puzzle: {{ chapterInfo.totalPuzzles }}</li>
+      <li>💡 Gunakan logika dan ketelitian!</li>
+    </ul>
+    <button class="start-btn" (click)="startPuzzle()">Ayo Mulai!</button>
+  </div>
+</div>
+
+<div class="loading-screen" *ngIf="showLoading">
+  <div class="spinner"></div>
+  <p>Memuat pertanyaan...</p>
+</div>
+
+<div class="end-popup" *ngIf="showEndPopup">
+  <div class="popup-content">
+    <h2>Wahhhh kamu berhasil selesaikan semua puzzle!</h2>
+    <h3>EXO-L sejati nih boss! 😎💖</h3>
+    <img [src]="randomMeme" alt="EXO Meme" class="exo-meme" />
+    <button class="btn-finish" (click)="nextChapter('/reward')">
+      Finish
+    </button>
+  </div>
+</div>
+
+<div *ngIf="puzzleStarted">
+  <app-puzzle
+    [title]="puzzles[currentPuzzleIndex].title"
+    [question]="puzzles[currentPuzzleIndex].question"
+    [instruction]="puzzles[currentPuzzleIndex].instruction"
+    [items]="puzzles[currentPuzzleIndex].items"
+    [answers]="puzzles[currentPuzzleIndex].items"
+    (nextPuzzleEvent)="handleNextPuzzle()"
+  ></app-puzzle>
+</div>

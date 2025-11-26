@@ -355,3 +355,24 @@
 
 }
 
+.loading-screen {
+    position: fixed;
+    inset: 0;
+    background: #111;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1200;
+}
+
+.loader {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #555;
+    border-top: 6px solid #c080ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}

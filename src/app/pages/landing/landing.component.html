@@ -1,18 +1,22 @@
 
+<div class="loading-screen" *ngIf="showLoading">
+  <p>Menyiapkan gambar-gambar...</p>
+  <div class="loader"></div>
+</div>
 <div class="moon-img"><img class="spin" src="/assets/images/moon.png" alt=""></div>
 <div class="banner">
     <h2>We Are One!</h2>
     <div class="slider" style="--quantity: 10">
-      <div class="item" style="--position: 1"><img src="/assets/images/slider1.png" alt=""></div>
-      <div class="item" style="--position: 2"><img src="/assets/images/slider2.png" alt=""></div>
-      <div class="item" style="--position: 3"><img src="/assets/images/slider3.png" alt=""></div>
-      <div class="item" style="--position: 4"><img src="/assets/images/slider4.png" alt=""></div>
-      <div class="item" style="--position: 5"><img src="/assets/images/slider5.png" alt=""></div>
-      <div class="item" style="--position: 6"><img src="/assets/images/slider6.png" alt=""></div>
-      <div class="item" style="--position: 7"><img src="/assets/images/slider7.png" alt=""></div>
-      <div class="item" style="--position: 8"><img src="/assets/images/slider8.png" alt=""></div>
-      <div class="item" style="--position: 9"><img src="/assets/images/slider9.png" alt=""></div>
-      <div class="item" style="--position: 10"><img src="/assets/images/slider10.png" alt=""></div>
+      <div class="item" style="--position: 1"><img src="https://res.cloudinary.com/derdez54y/image/upload/v1764172716/95_ratelt.png" (load)="onImageLoad()" (error)="onImageLoad()"></div>
+      <div class="item" style="--position: 2"><img src="https://res.cloudinary.com/derdez54y/image/upload/v1764172714/98_hqtiwt.png" (load)="onImageLoad()" (error)="onImageLoad()"></div>
+      <div class="item" style="--position: 3"><img src="https://res.cloudinary.com/derdez54y/image/upload/v1764172714/100_km5tyz.png" (load)="onImageLoad()" (error)="onImageLoad()"></div>
+      <div class="item" style="--position: 4"><img src="https://res.cloudinary.com/derdez54y/image/upload/v1764172709/93_b8vcip.png" (load)="onImageLoad()" (error)="onImageLoad()"></div>
+      <div class="item" style="--position: 5"><img src="https://res.cloudinary.com/derdez54y/image/upload/v1764172714/99_xnmvde.png" (load)="onImageLoad()" (error)="onImageLoad()"></div>
+      <div class="item" style="--position: 6"><img src="https://res.cloudinary.com/derdez54y/image/upload/v1764172709/97_zwtvzr.png" (load)="onImageLoad()" (error)="onImageLoad()"></div>
+      <div class="item" style="--position: 7"><img src="https://res.cloudinary.com/derdez54y/image/upload/v1764172708/94_xltlex.png" (load)="onImageLoad()" (error)="onImageLoad()"></div>
+      <div class="item" style="--position: 8"><img src="https://res.cloudinary.com/derdez54y/image/upload/v1764172712/92_b5slwp.png" (load)="onImageLoad()" (error)="onImageLoad()"></div>
+      <div class="item" style="--position: 9"><img src="https://res.cloudinary.com/derdez54y/image/upload/v1764172714/96_la0qb8.png" (load)="onImageLoad()" (error)="onImageLoad()"></div>
+      <div class="item" style="--position: 10"><img src="https://res.cloudinary.com/derdez54y/image/upload/v1764172716/101_zqgu9r.png" (load)="onImageLoad()" (error)="onImageLoad()"></div>
     </div>
     <div class="content">
           <h1 data-content="EXO FAN QUEST">
@@ -28,7 +32,7 @@
     </div>
     <div class="start-play">
             <span class="span1" style="color: #fff;"><strong><i>My Dearest EXO-L,</i></strong></span>
-            <span class="span2" style="color: #fff; margin-bottom: 10px;"><i>Ready to feel more exited?</i></span>
+            <span class="span2" style="color: #fff; margin-bottom: 10px;"><i>Ready to feel more excited?</i></span>
             <button class="btn btn-primary btn-glow" (click)="goToRoute('/introducing')">Let's Begin The Journey</button>
     </div>
 </div>

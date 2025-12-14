@@ -6,13 +6,40 @@
   <div>
     <button 
       style="padding-top: 7px; padding-bottom: 7px; padding-right: 12px; padding-left: 12px; margin-right: 5px;"
-      (click)="goToRoute('/')" class="btn btn-secondary"> Share </button>
+      (click)="handleShare()" class="btn btn-secondary"> Share </button>
     <button 
       style="padding-top: 7px; padding-bottom: 7px; padding-right: 12px; padding-left: 12px; margin-right: 5px;"
-      (click)="goToRoute('/')" class="btn btn-secondary"> Shop </button>
+      (click)="openShopee()" class="btn btn-secondary"> Shop </button>
   </div>
 </nav>
 <main>
+  <div *ngIf="shareMenuOpen" class="share-overlay" (click)="closeShareMenu()">
+    <div class="share-sheet" (click)="$event.stopPropagation()">
+      <div class="share-title">Bagikan link</div>
+
+      <button type="button" class="btn btn-light w-100" (click)="copyLink()">
+        Copy Link
+      </button>
+
+      <a class="btn btn-success w-100 mt-2"
+        [href]="waShareUrl"
+        target="_blank"
+        rel="noopener noreferrer">
+        Share ke WhatsApp
+      </a>
+
+      <a class="btn btn-info w-100 mt-2"
+        [href]="telegramShareUrl"
+        target="_blank"
+        rel="noopener noreferrer">
+        Share ke Telegram
+      </a>
+
+      <button type="button" class="btn btn-outline-secondary w-100 mt-2" (click)="closeShareMenu()">
+        Tutup
+      </button>
+    </div>
+  </div>
   <app-falling-stars></app-falling-stars>
   <router-outlet></router-outlet>
 </main>

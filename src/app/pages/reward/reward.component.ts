@@ -87,8 +87,8 @@ export class RewardComponent implements AfterViewInit {
 
   claimReward() {
     const link = document.createElement('a');
-    link.href = 'assets/images/rewards/kyungsoo.jpg';
-    link.download = 'baekhyun_photocard.jpg';
+    link.href = this.rewardLinkFront;
+    link.download = 'reward.jpg';
     link.click(); 
   }
 

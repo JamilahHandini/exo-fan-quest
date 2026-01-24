@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
+import { Firestore, doc, setDoc, updateDoc, increment } from '@angular/fire/firestore';
+import { SharedService } from '../../shared.service';
 
 @Component({
   selector: 'app-puzzle',
@@ -18,6 +20,7 @@ export class PuzzleComponent implements OnInit {
 
 
   @Output() nextPuzzleEvent = new EventEmitter<void>();
+  @Output() answerEvent = new EventEmitter<boolean>();
 
   pieces: any[] = [];
   slots: (any | null)[] = [];
@@ -26,7 +29,12 @@ export class PuzzleComponent implements OnInit {
   showPopup = false;
   isCorrect = false;
 
-  constructor() {}
+  @Input() correctPoints :number = 0;
+  @Input() wrongPoints :number = 0;  
+
+  userId! : string;
+
+  constructor(private firestore: Firestore, private shared: SharedService) {}
 
   ngOnInit(): void {
     this.shufflePieces();
@@ -38,14 +46,15 @@ export class PuzzleComponent implements OnInit {
   }
 
   checkAnswer() {
-    console.log('slots', this.slots);
-    console.log('images', this.answers);
     const correct = this.slots.every((v, i) => v === this.answers[i]);
     this.isCorrect = correct;
     this.showPopup = true;
     this.message = correct
       ? '✨ Hebat! Puzzle selesai dengan benar! ✨'
       : '😢 Masih salah, coba lagi ya!';
+
+    this.answerEvent.emit(this.isCorrect);
+    this.updateFirebasePoints();
   }
 
   closePopup() {
@@ -54,23 +63,17 @@ export class PuzzleComponent implements OnInit {
   }
 
   reset() {
-    // aslinya pakai images.length, aku biarkan sama supaya logika kamu nggak berubah
     this.slots = Array(this.items.length).fill(null);
     this.shufflePieces();
     this.message = '';
     this.showPopup = false;
   }
 
-  /**
-   * Drop ke salah satu slot di grid puzzle
-   */
   onDropSlot(event: CdkDragDrop<any>) {
     const toData = event.container.data as { type: string; index?: number };
     const fromData = event.previousContainer.data as { type: string; index?: number };
 
-    // index slot tujuan
     const slotIndex = toData.index!;
-    // asal: 'pool' atau index slot
     const from: 'pool' | number =
       fromData.type === 'slot' && typeof fromData.index === 'number'
         ? fromData.index
@@ -78,28 +81,20 @@ export class PuzzleComponent implements OnInit {
 
     const item = event.item.data;
 
-    // === LOGIKA LAMA onDrop (disesuaikan ke CDK) ===
-    // Hapus dari slot asal kalau dari slot
     if (typeof from === 'number') {
       this.slots[from] = null;
     } else {
-      // Hapus dari pool kalau asalnya pool
       const idx = this.pieces.findIndex((p) => p.value === item.value);
       if (idx > -1) this.pieces.splice(idx, 1);
     }
 
-    // Jika slot tujuan sudah berisi, pindahkan isi lamanya ke pool
     if (this.slots[slotIndex]) {
       this.pieces.push(this.slots[slotIndex]);
     }
 
-    // Masukkan item ke slot tujuan
     this.slots[slotIndex] = item;
   }
 
-  /**
-   * Drop kembali ke pool (pieces-grid)
-   */
   onDropBackToPool(event: CdkDragDrop<any>) {
     const fromData = event.previousContainer.data as { type: string; index?: number };
     const from: 'pool' | number =
@@ -109,15 +104,23 @@ export class PuzzleComponent implements OnInit {
 
     const item = event.item.data;
 
-    // === LOGIKA LAMA onDropBackToPool (disesuaikan ke CDK) ===
-    // Kosongkan slot asal jika dari slot
     if (typeof from === 'number') {
       this.slots[from] = null;
     }
 
-    // Hindari duplikasi di pool
     if (!this.pieces.some((p) => p.value === item.value)) {
       this.pieces.push(item);
     }
+  }
+
+  updateFirebasePoints() {
+    if (!this.userId) return;
+
+    const userRef = doc(this.firestore, 'referrals', this.userId);
+
+    updateDoc(userRef, {
+      correctPoints: increment(this.isCorrect ? 1 : 0),
+      wrongPoints: increment(!this.isCorrect ? 1 : 0)
+    }).catch(err => console.error('Firebase update error:', err));
   }
 }

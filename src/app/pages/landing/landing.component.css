@@ -1,6 +1,24 @@
 @import url('https://fonts.cdnfonts.com/css/ica-rubrik-black');
 @import url('https://fonts.cdnfonts.com/css/poppins');
 
+
+.btn-unmute {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  border: none;
+  background: none;  /* tidak ada background */
+  color: #990000;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.btn-unmute:hover {
+  transform: scale(1.2);
+  color: #660000;
+}
+
 .banner{
     width: 100%;
     height: 100vh;

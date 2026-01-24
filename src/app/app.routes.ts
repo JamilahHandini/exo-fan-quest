@@ -6,7 +6,6 @@ import { RewardComponent } from './pages/reward/reward.component';
 import { QuestContainerComponent } from './pages/quest-container/quest-container.component';
 import { StartingJourneyComponent } from './pages/starting-journey/starting-journey.component';
 import { GuessSongContainerComponent } from './pages/guess-song-container/guess-song-container.component';
-import { PuzzleContohComponent } from './pages/puzzle-contoh/puzzle-contoh.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -16,5 +15,4 @@ export const routes: Routes = [
   { path: 'quest', component: QuestContainerComponent },
   { path: 'starting-journey', component: StartingJourneyComponent },
   { path: 'guess-song', component: GuessSongContainerComponent },
-  { path: 'puzzle-contoh', component: PuzzleContohComponent },
 ];

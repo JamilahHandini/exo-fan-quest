@@ -14,6 +14,18 @@ export class LandingComponent {
   totalImages = 10;
   loadedImages = 0;
   constructor(private router: Router) {}
+  audioSrc='https://res.cloudinary.com/derdez54y/video/upload/v1763529940/moster_lwe2tc.mp3';
+  showUnmute = true;
+
+  unmuteAudio() {
+    const audio = document.getElementById('bg-audio') as HTMLAudioElement;
+    if (audio) {
+      audio.muted = false;
+      this.audioSrc='https://res.cloudinary.com/derdez54y/video/upload/v1763529940/moster_lwe2tc.mp3';
+      audio.play().catch(err => console.error(err));
+    }
+    this.showUnmute = false;
+  }
 
   goToRoute(route: string): void {
     this.router.navigate([route]);

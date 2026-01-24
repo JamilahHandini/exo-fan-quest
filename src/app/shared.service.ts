@@ -5,8 +5,17 @@ import { Injectable } from '@angular/core';
 })
 export class SharedService {
 
+  private userId: string = '';
   private nama: string = '';
   private rewardLink: string = '';
+
+  setUserId(value: string) {
+    this.userId = value;
+  }
+
+  getUserId(): string {
+    return this.userId;
+  }
 
   setNama(value: string) {
     this.nama = value;

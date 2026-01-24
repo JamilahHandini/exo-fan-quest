@@ -19,7 +19,10 @@
   <app-guess-song
     [audioSrc]="songs[currentSongIndex].audioSrc"
     [options]="songs[currentSongIndex].options"
+    [correctPoints]="correctPoints"
+    [wrongPoints]="wrongPoints"
     (nextSongEvent)="handleNextSong()"
+    (answerEvent)="handleAnswer($event)"
   ></app-guess-song>
 </div>
 

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Firestore, doc, setDoc, updateDoc, increment } from '@angular/fire/firestore';
+import { SharedService } from '../../shared.service';
 
 @Component({
   selector: 'app-quest',
@@ -12,6 +14,7 @@ export class QuestComponent implements OnInit, OnDestroy {
   @Input() question!: string;
   @Input() options: any[] = [];
   @Output() nextQuestionEvent = new EventEmitter<void>();
+  @Output() answerEvent = new EventEmitter<boolean>();
 
   selectedOption: any = null;
   showPopup = false;
@@ -19,14 +22,22 @@ export class QuestComponent implements OnInit, OnDestroy {
   confirmed = false;
   resultShown = false;
 
-  timeLeft = 15;
-  maxTime = 15;
+  timeLeft = 8;
+  maxTime = 8;
   timer: any;
   timeUp = false;
   progress = "360deg"; 
 
+  @Input() correctPoints :number = 0;
+  @Input() wrongPoints :number = 0;  
+
+  userId! : string;
+
+  constructor(private firestore: Firestore, private shared: SharedService) {}
+
   ngOnInit(): void {
     this.startTimer();
+    this.userId = this.shared.getUserId();
   }
 
   ngOnDestroy(): void {
@@ -64,8 +75,13 @@ export class QuestComponent implements OnInit, OnDestroy {
             this.clearTimer();
             this.timeUp = true;
             this.showPopup = true;
+            
+            this.answerEvent.emit(false);
+            this.updateFirebasePoints();
           }
       }, 1000);
+
+      
   }
 
   selectOption(option: any) {
@@ -80,6 +96,9 @@ export class QuestComponent implements OnInit, OnDestroy {
     this.confirmed = true;
     this.isCorrect = this.selectedOption.isCorrect;
     this.resultShown = true;
+
+    this.answerEvent.emit(this.isCorrect);
+    this.updateFirebasePoints();
   }
 
     
@@ -97,5 +116,16 @@ export class QuestComponent implements OnInit, OnDestroy {
   cancelAnswer() {
       this.resetState();
       this.startTimer();
+  }
+
+  updateFirebasePoints() {
+    if (!this.userId) return;
+
+    const userRef = doc(this.firestore, 'referrals', this.userId);
+
+    updateDoc(userRef, {
+      correctPoints: increment(this.isCorrect ? 1 : 0),
+      wrongPoints: increment(!this.isCorrect ? 1 : 0)
+    }).catch(err => console.error('Firebase update error:', err));
   }
 }

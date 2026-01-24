@@ -4,6 +4,8 @@ import { GuessSongComponent } from '../guess-song/guess-song.component';
 import confetti from 'canvas-confetti';
 import { Router, RouterLink } from '@angular/router';
 import { SongService, Song } from '../../services/song.service';
+import { ReferralService } from '../../services/referrals.service';
+import { SharedService } from '../../shared.service';
 
 @Component({
   selector: 'app-guess-song-container',
@@ -28,15 +30,37 @@ export class GuessSongContainerComponent {
 
   songs: any[] = [];
 
-  constructor(private router: Router, private songService: SongService) {}
+  correctPoints = 0;
+  wrongPoints = 0;
+
+  userId: any;
+  data: any;
+
+  constructor(
+    private router: Router, 
+    private songService: SongService,
+    private referralService: ReferralService, 
+    private shared: SharedService, 
+  ) {}
 
   ngOnInit(): void {
     const userAccess = localStorage.getItem('userReferralAccess');
     if (!userAccess) {
       this.router.navigate(['/introducing']);
       return;
+    } else {
+      const parsedData = JSON.parse(userAccess);
+      this.shared.setUserId(parsedData.userId);
+      this.userId = parsedData.userId;
+      this.preparePoints();
     }
     this.prepareSongs();
+  }
+
+  async preparePoints() {
+    this.data = await this.referralService.findById(this.userId);
+    this.correctPoints = this.data?.correctPoints;
+    this.wrongPoints = this.data?.wrongPoints;
   }
 
   async prepareSongs() {
@@ -95,5 +119,13 @@ export class GuessSongContainerComponent {
   nextChapter(route: string) {
     this.showEndPopup = false;
     this.router.navigate([route]);
+  }
+
+  handleAnswer(isCorrect: boolean) {
+    if (isCorrect) {
+      this.correctPoints += 1;
+    } else {
+      this.wrongPoints += 1;
+    }
   }
 }

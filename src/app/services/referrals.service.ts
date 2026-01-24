@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, query, where, getDocs, doc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, collection, query, where, getDocs, getDoc, doc, updateDoc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +7,22 @@ import { Firestore, collection, query, where, getDocs, doc, updateDoc } from '@a
 export class ReferralService {
 
   constructor(private firestore: Firestore) {}
+
+  async findById(id: string) {
+    try {
+      const docRef = doc(this.firestore, 'referrals', id);
+      const docSnap = await getDoc(docRef);
+
+      if (!docSnap.exists()) {
+        return null;
+      }
+
+      return { id: docSnap.id, ...docSnap.data() };
+    } catch (error) {
+      console.error('Firebase getById error:', error);
+      return null;
+    }
+  }
 
   async findReferral(code: string) {
     const ref = collection(this.firestore, 'referrals');

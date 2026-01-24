@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Firestore, doc, setDoc, updateDoc, increment } from '@angular/fire/firestore';
+import { SharedService } from '../../shared.service';
 
 @Component({
   selector: 'app-guess-song',
@@ -13,6 +15,7 @@ export class GuessSongComponent {
   @Input() options!: { text: string; img: string; isCorrect: boolean }[];
   @Output() nextSongEvent = new EventEmitter<void>();
   @ViewChild('audioPlayer') audioPlayer!: ElementRef<HTMLAudioElement>;
+  @Output() answerEvent = new EventEmitter<boolean>();
 
   clipDuration = 5;
   clipTimeout: any;
@@ -27,6 +30,17 @@ export class GuessSongComponent {
   clipStart: number | null = null;
   isPlaying = false;
 
+  @Input() correctPoints :number = 0;
+  @Input() wrongPoints :number = 0;  
+
+  userId! : string;
+
+  constructor(private firestore: Firestore, private shared: SharedService) {}
+
+  ngOnInit(): void {
+    this.userId = this.shared.getUserId();
+  }
+  
   selectOption(opt: any) {
     this.selectedOption = opt;
     this.showConfirmPopup = true;
@@ -43,6 +57,11 @@ export class GuessSongComponent {
 
   checkAnswer() {
     this.isCorrect = this.selectedOption.isCorrect;
+
+    this.answerEvent.emit(this.isCorrect);
+
+    this.updateFirebasePoints();
+
     this.showPopup = true;
   }
 
@@ -85,6 +104,17 @@ export class GuessSongComponent {
     };
 
     audio.addEventListener('timeupdate', stopAtEnd);
+  }
+
+  updateFirebasePoints() {
+    if (!this.userId) return;
+
+    const userRef = doc(this.firestore, 'referrals', this.userId);
+
+    updateDoc(userRef, {
+      correctPoints: increment(this.isCorrect ? 1 : 0),
+      wrongPoints: increment(!this.isCorrect ? 1 : 0)
+    }).catch(err => console.error('Firebase update error:', err));
   }
 
 }

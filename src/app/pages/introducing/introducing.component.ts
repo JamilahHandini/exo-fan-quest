@@ -43,9 +43,17 @@ export class IntroducingComponent {
     const username = this.userForm.get('username')?.value;
     const kode = this.userForm.get('kodeReferral')?.value;
 
-    let refData : any;
     this.showLoading = true;
-    refData = await this.referralService.findReferral(kode);
+    let refData: any = await this.referralService.findReferral(kode);
+    this.shared.setUserId(refData?.id);
+    
+    const storedData = localStorage.getItem('userReferralAccess');
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      this.shared.setNama(parsedData.name);
+      this.router.navigate(['starting-journey']);
+      return;
+    }
 
     if (!refData) {
       this.showLoading = false;
@@ -62,12 +70,14 @@ export class IntroducingComponent {
     if (!refData?.used) {
       
       this.shared.setNama(name);
+      this.shared.setUserId(refData?.id);
 
       await this.referralService.markUsed(refData.id);
 
       localStorage.setItem(
         'userReferralAccess',
         JSON.stringify({
+          userId: refData?.id,
           name: name,
           rewardLinkFront: refData?.rewardLinkFront,
           rewardLinkBack: refData?.rewardLinkBack,
@@ -89,6 +99,7 @@ export class IntroducingComponent {
 
     if (refData.used && refData.username === username) {
       this.shared.setNama(name);
+      this.shared.setUserId(refData?.id);
 
       localStorage.setItem(
         'userReferralAccess',

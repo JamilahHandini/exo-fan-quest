@@ -1,5 +1,9 @@
 
 <div class="card-wrapper">
+  <div class="score-board">
+    <span>✅ Benar: {{ correctPoints }}</span>
+    <span>❌ Salah: {{ wrongPoints }}</span>
+  </div>
   <h1 class="main-title">Question</h1>
   <div class="card-container">
     <div class="circle-timer" [style]="{'--progress': progress}">

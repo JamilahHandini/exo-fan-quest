@@ -1,5 +1,9 @@
 <div class="card-wrapper">
   <h1 class="main-title">{{ title }}</h1>
+  <div class="score-board">
+    <span>✅ Benar: {{ correctPoints }}</span>
+    <span>❌ Salah: {{ wrongPoints }}</span>
+  </div>
 
   <div class="card-container" cdkDropListGroup>
     <h2>{{ question }}</h2>

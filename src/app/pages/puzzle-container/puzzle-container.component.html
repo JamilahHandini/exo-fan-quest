@@ -34,5 +34,8 @@
     [items]="puzzles[currentPuzzleIndex].items"
     [answers]="puzzles[currentPuzzleIndex].items"
     (nextPuzzleEvent)="handleNextPuzzle()"
+    [correctPoints]="correctPoints"
+    [wrongPoints]="wrongPoints"
+    (answerEvent)="handleAnswer($event)"
   ></app-puzzle>
 </div>

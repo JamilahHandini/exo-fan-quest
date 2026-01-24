@@ -4,6 +4,8 @@ import { PuzzleComponent } from '../puzzle/puzzle.component';
 import confetti from 'canvas-confetti';
 import { Router, RouterLink } from '@angular/router';
 import { PuzzleService, Puzzle } from '../../services/puzzle.service';
+import { ReferralService } from '../../services/referrals.service';
+import { SharedService } from '../../shared.service';
 
 @Component({
   selector: 'app-puzzle-container',
@@ -30,9 +32,17 @@ export class PuzzleContainerComponent {
   puzzles: Puzzle[] = [];
   randomMeme = '';
 
+  correctPoints = 0;
+  wrongPoints = 0;
+
+  userId: any;
+  data: any;
+
   constructor(
     private router: Router,
-    private puzzleService: PuzzleService
+    private puzzleService: PuzzleService,
+    private referralService: ReferralService, 
+    private shared: SharedService, 
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -40,9 +50,20 @@ export class PuzzleContainerComponent {
     if (!userAccess) {
       this.router.navigate(['/introducing']);
       return;
+    } else {
+      const parsedData = JSON.parse(userAccess);
+      this.shared.setUserId(parsedData.userId);
+      this.userId = parsedData.userId;
+      this.preparePoints();
     }
 
     await this.loadPuzzles();
+  }
+
+  async preparePoints() {
+    this.data = await this.referralService.findById(this.userId);
+    this.correctPoints = this.data?.correctPoints;
+    this.wrongPoints = this.data?.wrongPoints;
   }
 
   async loadPuzzles() {
@@ -54,7 +75,6 @@ export class PuzzleContainerComponent {
       );
 
       this.puzzles = fetched;
-      console.log(this.puzzles)
 
       setTimeout(() => {
         this.showLoading = false;
@@ -123,5 +143,13 @@ export class PuzzleContainerComponent {
   nextChapter(route: string): void {
     this.showEndPopup = false;
     this.router.navigate([route]);
+  }
+
+  handleAnswer(isCorrect: boolean) {
+    if (isCorrect) {
+      this.correctPoints += 1;
+    } else {
+      this.wrongPoints += 1;
+    }
   }
 }

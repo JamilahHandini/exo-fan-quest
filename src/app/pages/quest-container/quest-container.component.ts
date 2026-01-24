@@ -4,6 +4,8 @@ import { QuestComponent } from '../quest/quest.component';
 import confetti from 'canvas-confetti';
 import { RouterLink, Router } from '@angular/router';
 import { QuestionService, Question } from '../../services/question.service';
+import { ReferralService } from '../../services/referrals.service';
+import { SharedService } from '../../shared.service';
 
 @Component({
   selector: 'app-quest-container',
@@ -22,22 +24,44 @@ export class QuestContainerComponent {
   chapterInfo = {
     title: 'Chapter Quiz',
     totalQuestions: 10,
-    timePerQuestion: 15,
+    timePerQuestion: 8,
     description:
-      'Di chapter ini kamu akan menjawab 10 pertanyaan seputar EXO dan Membernya! Setiap soal punya waktu 15 detik, jadi fokus ya biar ga dimarahin Kyungsoo dan kena tabok Chanyeol😆',
+      'Di chapter ini kamu akan menjawab 10 pertanyaan seputar EXO dan Membernya! Setiap soal punya waktu 8 detik, jadi fokus ya biar ga dimarahin Kyungsoo dan kena tabok Chanyeol😆',
   };
 
   currentQuestionIndex = 0;
   randomMeme: string = '';
 
-  constructor(private router: Router, private questionService: QuestionService) {}
+  correctPoints = 0;
+  wrongPoints = 0;
+
+  userId: any;
+  data: any;
+
+  constructor(
+    private router: Router, 
+    private questionService: QuestionService, 
+    private referralService: ReferralService, 
+    private shared: SharedService, 
+  ) {}
 
   ngOnInit(): void {
     const userAccess = localStorage.getItem('userReferralAccess');
     if (!userAccess) {
       this.router.navigate(['/introducing']);
       return;
+    } else {
+      const parsedData = JSON.parse(userAccess);
+      this.shared.setUserId(parsedData.userId);
+      this.userId = parsedData.userId;
+      this.preparePoints();
     }
+  }
+
+  async preparePoints() {
+    this.data = await this.referralService.findById(this.userId);
+    this.correctPoints = this.data?.correctPoints;
+    this.wrongPoints = this.data?.wrongPoints;
   }
 
   async prepareQuestions() {
@@ -112,5 +136,13 @@ export class QuestContainerComponent {
   nextChapter(route: string): void {
     this.showEndPopup = false
     this.router.navigate([route]);
+  }
+
+  handleAnswer(isCorrect: boolean) {
+    if (isCorrect) {
+      this.correctPoints += 1;
+    } else {
+      this.wrongPoints += 1;
+    }
   }
 }

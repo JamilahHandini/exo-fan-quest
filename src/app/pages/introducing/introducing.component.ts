@@ -109,6 +109,7 @@ export class IntroducingComponent {
       localStorage.setItem(
         'userReferralAccess',
         JSON.stringify({
+          userId: refData?.id,
           name: name,
           username:username,
           correctPoints: refData?.correctPoints,

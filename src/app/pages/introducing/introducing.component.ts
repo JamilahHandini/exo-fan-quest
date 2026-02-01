@@ -81,6 +81,9 @@ export class IntroducingComponent {
         JSON.stringify({
           userId: refData?.id,
           name: name,
+          username:username,
+          correctPoints: refData?.correctPoints,
+          wrongPoints: refData?.wrongPoints,
           rewardLinkFront: refData?.rewardLinkFront,
           rewardLinkBack: refData?.rewardLinkBack,
           referralCode: kode,
@@ -107,6 +110,9 @@ export class IntroducingComponent {
         'userReferralAccess',
         JSON.stringify({
           name: name,
+          username:username,
+          correctPoints: refData?.correctPoints,
+          wrongPoints: refData?.wrongPoints,
           rewardLinkFront: refData?.rewardLinkFront,
           rewardLinkBack: refData?.rewardLinkBack,
           referralCode: kode,

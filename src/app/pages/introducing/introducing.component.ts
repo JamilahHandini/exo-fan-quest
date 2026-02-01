@@ -52,7 +52,9 @@ export class IntroducingComponent {
       const parsedData = JSON.parse(storedData);
       this.shared.setNama(parsedData.name);
       this.router.navigate(['starting-journey']);
-      return;
+      if (parsedData.username === username) {
+        return;
+      }
     }
 
     if (!refData) {
